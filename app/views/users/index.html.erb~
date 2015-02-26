@@ -1,0 +1,74 @@
+<!-- p id="error"><%= flash[:error] %></p>
+<p id="notice"><%= flash[:notice] %></p> -->
+  <%= flash_messages %>
+<% unless @new_user_errors.empty?  %>
+   <div id="error_explanation">
+     <h2><%= @new_user_errors.size %> prohibited this import from completing:</h2>
+     <ul>
+     <% @new_user_errors.each do |rc,msgs| %>
+       <%msgs.each do |msg|%>
+       <li><%=rc%> row :<%= msg %></li>
+       <%end%>
+     <% end %>
+     </ul>
+   </div>
+ <% end %>
+
+
+<h2>Import Users</h2>
+<%= form_tag import_users_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+<h3>User List</h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Favorite Food</th>
+    <th>Date & Time</th>
+    
+  </tr>
+
+<% @user.each do |p| %>
+  <tr>
+    <td><%= p.name%></td>
+    <td><%= p.age%></td>
+    <td><%= p.favorite_food %></td>
+    <td><%= p.created_at.strftime("%d/%m/%Y %I:%M %p") %></td>
+    </tr>
+<% end %>
+</table>
+<p><%#= link_to "Import users", user_imports_new_path %></p>
+<style>
+table { 
+color: #333;
+font-family: Helvetica, Arial, sans-serif;
+width: 640px; 
+border-collapse: 
+collapse; border-spacing: 0; 
+text-align: center; 
+}
+
+td, th { 
+border: 1px solid transparent; 
+border-radius: 3px;
+height: 30px; 
+transition: all 0.3s; }
+
+th {
+background: #333;  
+font-weight: bold;
+color: #fff;  
+}
+
+td {
+background: #FAFAFA;
+text-align: center;
+}
+tr:nth-child(even) td { background: #F1F1F1; }   
+
+tr:nth-child(odd) td { background: #FEFEFE; }  
+
+tr td:hover { background: #666; color: #FFF; } 
+</style>
